@@ -1,6 +1,6 @@
 Graphit
 ===================
 
-Graphit is an Ruby on Rails web application for 3D graph drawing with WebGL.
+Graphit is an Ruby on Rails web application for 3D graph visualization with WebGL.
 
-It uses [Graph Visualization](git@github.com:davidpiegza/Graph-Visualization.git) for graph drawing.
+It uses [Graph Visualization](https://github.com/davidpiegza/Graph-Visualization/) for graph drawing.
