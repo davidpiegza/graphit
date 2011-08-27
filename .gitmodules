@@ -1,0 +1,6 @@
+[submodule "lib/assets/graph-visuaalization"]
+	path = lib/assets/graph-visuaalization
+	url = git@github.com:davidpiegza/graphit.git
+[submodule "lib/assets/graph-visualization"]
+	path = lib/assets/graph-visualization
+	url = git@github.com:davidpiegza/Graph-Visualization.git
