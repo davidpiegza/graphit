@@ -1,5 +1,6 @@
 .bundle
-db/*.sqlite3
+db/*
 log/*.log
 tmp/
 .sass-cache/
+.DS_Store
