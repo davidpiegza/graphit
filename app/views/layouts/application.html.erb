@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Graphit</title>
+  <title>graphit</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-
-<%= yield %>
+<body >
+  <div id="welcome-dialog" title="Welcome to graphit">
+  	<p>On this site you can visualize graph data in a 3D layout.</p>
+  	<p>You may load your own data from an xml file or play around with a sample graph</p>
+  	<div class="welcome-buttons">
+    	<p>
+    	  <input type="button" value="Import your data" />
+    	</p>
+    	or
+    	<p>
+    	  <input type="button" value="Load a sample graph" />
+    	</p>
+  	</div>
+  </div>
+  <header>
+    <div id="logo">
+      <a href="">graphit</a>
+    </div>
+    <div id="buttons">
+      <form>
+        <input name="q" type="search" placeholder="Search in graph" class="search">
+      </form>
+      <input name="q" type="button" value="Import your graph data">
+    </div>
+  </header>
+  
+  <%= yield %>
 
 </body>
 </html>
