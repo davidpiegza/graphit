@@ -6,4 +6,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+
+// Graph specific files
+//= require graph-min
+
 //= require_tree .
