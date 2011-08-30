@@ -11,7 +11,7 @@
 // Graph specific files
 //  require graph-min
 
-// require_tree .
+//= require_tree .
 
 
 $(document).ready(function(){
