@@ -7,7 +7,6 @@ require "action_mailer/railtie"
 require "active_resource/railtie"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
-require "neo4j"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -50,7 +49,7 @@ module Graphit
     config.assets.enabled = true
 
     # Settings for Neo4j
-    config.neo4j.storage_path = "#{config.root}/db/neo4j-#{Rails.env}"
-    config.neo4j.timestamps = false  # disable automatic timestamps on updated_at and created_at properties    
+    # config.neo4j.storage_path = "#{config.root}/db/neo4j-#{Rails.env}"
+    # config.neo4j.timestamps = false  # disable automatic timestamps on updated_at and created_at properties    
   end
 end
