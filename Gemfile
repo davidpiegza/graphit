@@ -5,9 +5,8 @@ gem 'rails', '3.1.0.rc6'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'neo4j', '1.2.0'
-
-gem 'jruby-openssl'
+# gem 'neo4j', '1.2.0'
+# gem 'jruby-openssl'
 
 # Gems used only for assets and not required
 # in production environments by default.
