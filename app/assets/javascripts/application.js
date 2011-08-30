@@ -5,9 +5,18 @@
 // the compiled file.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 
 // Graph specific files
-//= require graph-min
+//  require graph-min
 
-//= require_tree .
+// require_tree .
+
+
+$(document).ready(function(){
+  $( "#welcome-dialog" ).dialog({
+    modal: true,
+    closeText: ""
+  });
+});

@@ -5,3 +5,88 @@
  *= require_self
  *= require_tree . 
 */
+
+
+/* LAYOUT */
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #fff;
+	overflow: hidden;	
+	font-family:  "Myriad pro", "Helvetica";
+}
+
+header {
+	position: absoulte;
+	top: 0;
+	background-color: #eee;
+	border-bottom: 1px solid #ddd;
+	color: black;
+	height: 50px;
+}
+
+header a {
+	font-family:  "Trebuchet MS", "Impact";
+	color: black;
+	text-shadow: 2px 1px 0 rgba(255, 255, 255, 0.8);
+	text-decoration: none;
+}
+
+#logo {
+	float: left;
+	padding: 5px;
+	margin-left: 200px;
+}
+
+#logo a {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+#buttons {
+	float: right;
+	padding: 15px;
+	width: 400px;
+}
+
+#buttons input {
+	float: left;
+	margin-right: 20px;
+}
+
+input.search {
+	width: 200px;
+	padding: 5px;
+}
+
+
+
+/* DIALOGS */
+
+#welcome-dialog {
+}
+
+.ui-dialog-titlebar {
+	background-color: #eee;
+	padding: 4px;
+	font-size: 28px;
+	text-shadow: 2px 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.ui-dialog {
+	width: auto;
+	min-height: 200px;
+	background-color: #eee;
+	padding: 10px;
+	font-size: 18px;
+}
+
+.welcome-buttons {
+	text-align: center;	
+}
+
+.welcome-buttons input {
+	font-size: 20px;
+}
+
+
