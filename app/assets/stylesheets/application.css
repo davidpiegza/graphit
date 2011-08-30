@@ -46,7 +46,7 @@ header a {
 #buttons {
 	float: right;
 	padding: 15px;
-	width: 400px;
+	width: 500px;
 }
 
 #buttons input {
@@ -56,7 +56,6 @@ header a {
 
 input.search {
 	width: 200px;
-	padding: 5px;
 }
 
 
