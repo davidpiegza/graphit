@@ -3,8 +3,10 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
+ *= require formalize
  *= require_tree . 
 */
+
 
 
 /* LAYOUT */
@@ -17,16 +19,17 @@ body {
 }
 
 header {
-	position: absoulte;
-	top: 0;
+	position: absolute;
+	top: 0px;
 	background-color: #eee;
 	border-bottom: 1px solid #ddd;
 	color: black;
 	height: 50px;
+	width: 100%;
 }
 
 header a {
-	font-family:  "Trebuchet MS", "Impact";
+	font-family:  "Trebuchet MS";
 	color: black;
 	text-shadow: 2px 1px 0 rgba(255, 255, 255, 0.8);
 	text-decoration: none;
@@ -43,6 +46,12 @@ header a {
 	font-weight: bold;
 }
 
+.logo {
+	font-family:  "Trebuchet MS";
+	text-shadow: 2px 1px 0 rgba(200, 200, 200, 0.8);
+	font-weight: bold;
+}
+
 #buttons {
 	float: right;
 	padding: 15px;
@@ -52,12 +61,15 @@ header a {
 #buttons input {
 	float: left;
 	margin-right: 20px;
+	
 }
 
-input.search {
+#buttons input[type="search"], #buttons input.search {
 	width: 200px;
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
-
 
 
 /* DIALOGS */
@@ -66,18 +78,41 @@ input.search {
 }
 
 .ui-dialog-titlebar {
-	background-color: #eee;
+	background-color: rgb(160, 180, 200);
 	padding: 4px;
+	padding-top: 10px;
+	padding-left: 10px;
 	font-size: 28px;
-	text-shadow: 2px 1px 0 rgba(255, 255, 255, 0.8);
+	text-shadow: 2px 1px 0 rgba(200, 200, 200, 0.8);
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .ui-dialog {
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	box-shadow: 5px 5px 5px #888;
 	width: auto;
 	min-height: 200px;
-	background-color: #eee;
+	background-color: #fefefe;
 	padding: 10px;
-	font-size: 18px;
+	
+}
+
+.ui-dialog-content {
+	padding:  5px;
+	font-size: 16px;
+}
+
+.ui-widget-overlay {
+	background-color: #777;
+	opacity: 0.2;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .welcome-buttons {
@@ -87,5 +122,6 @@ input.search {
 .welcome-buttons input {
 	font-size: 20px;
 }
+
 
 

@@ -7,22 +7,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body >
-  <div id="welcome-dialog" title="Welcome to graphit">
-  	<p>On this site you can visualize graph data in a 3D layout.</p>
-  	<p>You may load your own data from an xml file or play around with a sample graph</p>
-  	<div class="welcome-buttons">
-    	<p>
-    	  <input type="button" value="Import your data" />
-    	</p>
-    	or
-    	<p>
-    	  <input type="button" value="Load a sample graph" />
-    	</p>
-  	</div>
-  </div>
+
   <header>
     <div id="logo">
-      <a href="">graphit</a>
+      <a href="/" class="logo">graphit</a>
     </div>
     <div id="buttons">
       <form>
@@ -34,5 +22,15 @@
   
   <%= yield %>
 
+  <div id="welcome-dialog" title="Welcome to <span class='logo'>graphit</span>">
+  	<p>On this site you can visualize graph data in a 3D layout.</p>
+  	<p>You may load your own data from an xml file or play around with a sample graph</p>
+  	<div class="welcome-buttons">
+    	<p>
+    	  <input type="button" value="Import your data" /> &nbsp;or&nbsp;
+    	  <input type="button" value="Load a sample graph" />
+    	</p>
+  	</div>
+  </div>
 </body>
 </html>
