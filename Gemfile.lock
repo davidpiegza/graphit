@@ -45,6 +45,8 @@ GEM
     erubis (2.7.0)
     execjs (1.2.4)
       multi_json (~> 1.0)
+    formalize-rails (0.0.3)
+      railties (~> 3.1.0.rc1)
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.13)
@@ -110,6 +112,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.1.0.rc)
+  formalize-rails
   jquery-rails
   rails (= 3.1.0.rc6)
   sass-rails (~> 3.1.0.rc)
