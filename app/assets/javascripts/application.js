@@ -7,6 +7,8 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require jquery.formalize
+//= require modernizr.custom.28136.js
 
 // Graph specific files
 //  require graph-min
@@ -16,7 +18,8 @@
 
 $(document).ready(function(){
   $( "#welcome-dialog" ).dialog({
-    modal: true,
+    modal: false,
+    position: ['center', 200],
     closeText: ""
   });
 });
