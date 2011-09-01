@@ -26,6 +26,7 @@ header {
 	color: black;
 	height: 50px;
 	width: 100%;
+	z-index: 1;
 }
 
 header a {
@@ -75,6 +76,11 @@ header a {
 /* DIALOGS */
 
 #welcome-dialog {
+	display: none;
+}
+
+#nowebgl-dialog {
+	display: none;
 }
 
 .ui-dialog-titlebar {
@@ -123,5 +129,11 @@ header a {
 	font-size: 20px;
 }
 
+#info-msg {
+	position: absolute;
+	bottom: 0;
+	font-size: 11px;
+	display: none;
+}
 
 
