@@ -11,15 +11,35 @@
 //= require modernizr.custom.28136.js
 
 // Graph specific files
-//  require graph-min
+//= require graph-min.js
 
 //= require_tree .
 
 
-$(document).ready(function(){
-  $( "#welcome-dialog" ).dialog({
-    modal: false,
-    position: ['center', 200],
-    closeText: ""
-  });
+$(document).ready(function() {
+  if(Modernizr.webgl){
+     $( "#welcome-dialog" ).dialog({
+       modal: false,
+       position: ['center', 200],
+       closeText: "",
+       closeOnEscape: false,
+       show: {effect: "fade", duration: 2000 },
+     });
+
+     $( "#load-sample-graph" ).click(function() {
+       $( "#welcome-dialog" ).dialog("close");
+       $( "#info-msg" ).show();
+       new Drawing.SimpleGraph({layout: "3d", limit: 100});
+     });
+     
+  } else {
+    $( "#nowebgl-dialog" ).dialog({
+      modal: false,
+      position: ['center', 200],
+      closeText: "",
+      closeOnEscape: false,
+      show: {effect: "fade", duration: 2000 },
+    });
+  }
+  
 });
