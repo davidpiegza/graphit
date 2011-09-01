@@ -19,6 +19,8 @@ end
 gem 'jquery-rails'
 gem 'formalize-rails'
 
+gem 'neography'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
