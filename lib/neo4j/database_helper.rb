@@ -8,6 +8,7 @@ module Neo4j
                                  :username => Rails.application.config.neo4j_username,
                                  :password => Rails.application.config.neo4j_password })
 
+      puts "created db: #{Rails.application.config.neo4j_host} #{Rails.application.config.neo4j_port} #{Rails.application.config.neo4j_username} #{Rails.application.config.neo4j_password}"
       @subref_node = nil
       generate_graphname if options[:generate_graphname]
     end
@@ -43,7 +44,7 @@ module Neo4j
 
     def create_node(node)
       if node[:created] && !node[:id].nil? && !node[:edges].empty?
-        
+        puts "creating node #{node.to_yaml}"
         # create subgraph if not exist (create only once when the first node is created)
         create_subgraph
         
