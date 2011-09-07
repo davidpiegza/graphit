@@ -27,6 +27,7 @@ module Neo4j
 
     def create_subgraph
       if @subref_node.nil?
+        puts "creating subgraph with name #{@graph_name}"
         @subref_node = @db.create_node(:name => @graph_name)
         @db.create_relationship(@graph_name, @db.get_root, @subref_node)
         @db.add_node_to_index("subreferences", "name", @graph_name, @subref_node)
@@ -48,6 +49,7 @@ module Neo4j
         # create subgraph if not exist (create only once when the first node is created)
         create_subgraph
         
+        puts "subgraph node: #{@subref_node}"
         # create node if not exist
         cr_node = @db.get_node_index(@graph_name, "id", node[:id].hash.to_s)
         if cr_node.nil?
