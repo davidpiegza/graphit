@@ -1,0 +1,141 @@
+<% content_for :jquery do %>
+  <% js = <<EOS
+      $( "#import-dialog" ).dialog({
+       modal: false,
+       position: ['center', 200],
+       closeText: "",
+       closeOnEscape: false,
+       show: {effect: "fade", duration: 0 }
+      });
+      $( "#import-help-dialog" ).dialog({
+       modal: false,
+       autoOpen: false,
+       closeText: "",
+       closeOnEscape: false,
+       show: {effect: "fade", duration: 0 },
+       width: 500,
+       height: 500,
+       buttons: { 
+            Close: function() {
+              $( this ).dialog( "close" );
+            }
+          }
+      });
+      
+      $("#help-button").click(function() {
+        $("#import-help-dialog").dialog("open");
+      });
+EOS
+  %>
+  <%= raw js %>
+<% end %>
+
+<div class="dialog" id="import-dialog" title="Import your graph data">
+  <% unless flash[:error].blank? %>
+    <p>
+      <h3><%= flash[:error] %></h3>
+    </p>
+  <% end %>
+  <%= form_tag '/graphs', :multipart => true do %>
+    <p>
+      <div class="form-label">
+        <%= label_tag :file %>
+        <!-- <span class="help" title="Choose your xml file">[ ? ]</span> -->
+      </div>
+      <%= file_field_tag :file %>
+    </p>
+    <p>
+      <div class="form-label">
+        <%= label_tag :'id-element', 'ID-Element' %>
+      </div>
+      <%= text_field_tag :'id-element' %>
+    </p>
+    <p>
+      <div class="form-label">
+        <%= label_tag :'ref-element', 'Reference-Element' %>
+      </div>
+      <%= text_field_tag :'ref-element' %>
+    </p>
+    <p>
+      <div class="form-label">
+        <%= label_tag :'title-element', 'Title-Element' %>
+      </div>
+      <%= text_field_tag :'title-element' %>
+    </p>
+    <p>
+      <div class="form-label">
+        <%= label_tag :'desc-element', 'Description-Element' %>
+      </div>
+      <%= text_field_tag :'desc-element' %>
+    </p>
+    <div class="buttonpane">
+      <input type="button" value="Help" id="help-button" />
+      <%= submit_tag 'Import file' %>
+    </div>
+  <% end %>
+</div>
+
+<div class="dialog" id="import-help-dialog" title="Import your graph data">
+  <h2>XML file structure</h2>
+  <p>
+    The XML file must consist of a root element, which has nodes as child elements. Each node needs at least an ID and reference-elements to other nodes.
+  </p>
+  <p>
+    Example:
+  </p>
+  <pre>
+&lt;?xml version=&quot;1.0&quot; ?&gt;
+&lt;root&gt;
+  &lt;node id=&quot;0&quot;&gt;
+  &lt;title&gt;title&lt;/title&gt;
+  &lt;ref&gt;1&lt;/ref&gt;
+  &lt;ref&gt;2&lt;/ref&gt;
+  &lt;/node&gt;
+  
+  &lt;node id=&quot;1&quot;&gt;
+  &lt;title&gt;title&lt;/title&gt;
+  &lt;ref&gt;2&lt;/ref&gt;
+  &lt;/node&gt;
+  
+  &lt;node id=&quot;2&quot;&gt;
+  &lt;title&gt;title&lt;/title&gt;
+  &lt;ref&gt;4&lt;/ref&gt;
+  &lt;ref&gt;5&lt;/ref&gt;
+  &lt;/node&gt;
+&lt;/root&gt;
+  </pre>
+  <p>You may also specify the nodes ID as child element like:</p>
+  <pre>
+&lt;node&gt;
+  &lt;id&gt;123&lt;/id&gt;
+  &lt;title&gt;title&lt;/title&gt;
+  &lt;ref&gt;1&lt;/ref&gt;
+  &lt;ref&gt;2&lt;/ref&gt;
+&lt;/node&gt;
+  </pre>
+
+  <h4>Import data form</h4>
+  <p>
+    In the import data form you can specify the name of the xml elements that should be used.
+  </p>
+  <ul>
+    <li>
+      ID-Element: self.id, id - default: self.id<br />
+      Name of the xml child element, which should be used for the unique id. If you prefer to set the id as an attribute of the node,
+       you have to set "self.<i>attribute_name</i>", e.g. self.id.
+    </li>
+    <li>
+      Reference-Element: <i>atrribute_name</i> - default: ref<br />
+       Name of the xml child element, which should be used for references. The value of this element must be the node id. You may
+       specify multiple reference elements
+    </li>
+    <li>
+      Title-Element: <i>atrribute_name</i><br />
+       Name of the xml child element, which should be used for the title.
+    </li>
+    <li>
+      Description-Element: <i>atrribute_name</i><br />
+       Name of the xml child element, which should be used for the description.
+    </li>
+  </ul>
+</div>

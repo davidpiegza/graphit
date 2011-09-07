@@ -4,6 +4,7 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
  *= require formalize
+ *= require tipTip
  *= require_tree . 
 */
 
@@ -75,8 +76,16 @@ header a {
 
 /* DIALOGS */
 
+.dialog {
+	display: none;
+}
+
 #welcome-dialog {
 	display: none;
+}
+
+#welcome-dialog form {
+	display: inline;
 }
 
 #nowebgl-dialog {
@@ -102,7 +111,6 @@ header a {
 	border: 1px solid #ccc;
 	box-shadow: 5px 5px 5px #888;
 	width: auto;
-	min-height: 200px;
 	background-color: #fefefe;
 	padding: 10px;
 	
@@ -111,6 +119,13 @@ header a {
 .ui-dialog-content {
 	padding:  5px;
 	font-size: 16px;
+	overflow: auto;
+}
+
+.ui-dialog-buttonpane, .buttonpane {
+	border-top: 1px solid #ccc;
+	text-align: right;
+	padding-top: 10px;
 }
 
 .ui-widget-overlay {
@@ -137,3 +152,14 @@ header a {
 }
 
 
+/* Import Dialog */
+
+.form-label .help {
+	float: right;
+	color: #999;
+	font-size: 14px;
+}
+
+form input {
+	width: 200px;
+}

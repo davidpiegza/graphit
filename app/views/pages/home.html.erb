@@ -1,0 +1,62 @@
+<% content_for :jquery do %>
+  <% js = <<EOS
+  if(Modernizr.webgl) {
+    $( "#welcome-dialog" ).dialog({
+      modal: false,
+      position: ['center', 200],
+      closeText: "",
+      closeOnEscape: false,
+      show: {effect: "fade", duration: 2000 },
+    });
+    
+    $( "#load-sample-graph" ).click(function() {
+     $( "#welcome-dialog" ).dialog("close");
+     $( "#info-msg" ).show();
+     new Drawing.SimpleGraph({layout: "3d", limit: 500, nodes: 50});
+     // new Drawing.Neo4jGraph({limit: 10000});
+    });
+    
+  } else {
+    $( "#nowebgl-dialog" ).dialog({
+      modal: false,
+      position: ['center', 200],
+      closeText: "",
+      closeOnEscape: false,
+      show: {effect: "fade", duration: 2000 },
+    });    
+  }
+EOS
+  %>
+  <%= raw js %>
+<% end %>
+
+
+<div class="dialog" id="welcome-dialog" title="Welcome to <span class='logo'>graphit</span>">
+	<p>On this site you can visualize graph data in a 3D layout.</p>
+	<p>You may load your own data from an xml file or play around with a sample graph.</p>
+	<div class="welcome-buttons">
+  	<p>
+      <form action="/graphs/new" method="get">
+        <input type="submit" value="Import your data" />
+	    </form>
+	     &nbsp;or&nbsp;
+      <input type="button" value="Load a sample graph" id="load-sample-graph" />
+  	</p>
+	</div>
+</div>
+<div class="dialog" id="nowebgl-dialog" title="Welcome to <span class='logo'>graphit</span>">
+	<p>Sorry, your browser does not support WebGL!</p>
+	<p>Get one of the following browser and try again:</p>
+	<ul>
+	  <li>Firefox 4</li>
+	  <li>Safari 5.1</li>
+	  <li>Google Chrome 10</li>
+	  <li>Opera 10.11</li>
+	</ul>
+</div>
+
+<div id="info-msg">
+  Rotate: Left Mouse Button and Move<br />
+  Zoom: Left Mouse Button + Key S and Move<br /> 
+  Drag: Left Mouse Button + Key D and Move
+</div>

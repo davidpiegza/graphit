@@ -1,0 +1,24 @@
+<% content_for :jquery do %>
+  <% js = <<EOS
+      $( "#graphs-dialog" ).dialog({
+       modal: false,
+       position: ['center', 200],
+       closeText: "",
+       closeOnEscape: false,
+       show: {effect: "fade", duration: 2000 },
+      });
+EOS
+  %>
+  <%= raw js %>
+<% end %>
+
+<div style="display: none" id="graphs-dialog" title="List of available graphs">
+	<p>On this site you can visualize graph data in a 3D layout.</p>
+	<ul>
+    <% @nodes.each do |node| %>
+      <li>
+        <%= node['type'].to_s %>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,0 +1,38 @@
+<% content_for :jquery do %>
+  <% js = <<EOS
+  if(Modernizr.webgl) {
+     $( "#info-msg" ).show();
+     //new Drawing.SimpleGraph({layout: "2d", limit: 500});
+      new Drawing.Neo4jGraph({node_id: #{@node_id}, limit: 10000});
+    
+  } else {
+    $( "#nowebgl-dialog" ).dialog({
+      modal: false,
+      position: ['center', 200],
+      closeText: "",
+      closeOnEscape: false,
+      show: {effect: "fade", duration: 2000 },
+    });    
+  }
+EOS
+  %>
+  <%= raw js %>
+<% end %>
+
+
+<div class="dialog" id="nowebgl-dialog" title="Welcome to <span class='logo'>graphit</span>">
+	<p>Sorry, your browser does not support WebGL!</p>
+	<p>Get one of the following browser and try again:</p>
+	<ul>
+	  <li>Firefox 4</li>
+	  <li>Safari 5.1</li>
+	  <li>Google Chrome 10</li>
+	  <li>Opera 10.11</li>
+	</ul>
+</div>
+
+<div id="info-msg">
+  Rotate: Left Mouse Button and Move<br />
+  Zoom: Left Mouse Button + Key S and Move<br /> 
+  Drag: Left Mouse Button + Key D and Move
+</div>
