@@ -3,7 +3,10 @@ require "#{Rails.root}/lib/neo4j/database_helper.rb"
 class GraphsController < ApplicationController
 
   def index
-    db = Neography::Rest.new
+    db = Neography::Rest.new({:server => Rails.application.config.neo4j_host, 
+                              :port => Rails.application.config.neo4j_port, 
+                              :username => Rails.application.config.neo4j_username,
+                              :password => Rails.application.config.neo4j_password })
     root = db.get_root
     @nodes = db.get_node_relationships(db.get_root)
   end

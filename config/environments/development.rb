@@ -24,4 +24,10 @@ Graphit::Application.configure do
 
   # Do not compress assets
   config.assets.compress = false
+  
+  config.neo4j_host = 'localhost'
+  config.neo4j_port = '7474'
+  config.neo4j_rest_url = 'http://localhost:7474/db/data'
+  config.neo4j_username = ''
+  config.neo4j_password = ''
 end

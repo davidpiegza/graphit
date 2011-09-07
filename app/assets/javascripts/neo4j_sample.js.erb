@@ -8,8 +8,8 @@ Drawing.Neo4jGraph = function(options) {
   var graph = new Graph({limit: options.limit});
   var graph_layout;
 
-  var neo4j_host = "http://localhost:7474";
-  var neo4j_root = "/db/data/node/" + (options.node_id || 0);
+  var neo4j_host = "<%= Rails.application.config.neo4j_rest_url %>";
+  var neo4j_root = "/node/" + (options.node_id || 0);
   var node_queue = [];
   var finished = true;
   
@@ -79,7 +79,6 @@ Drawing.Neo4jGraph = function(options) {
 
   function createGraph() {
     $.getJSON(neo4j_host + neo4j_root, function(db_node) {
-
       var node_id = getNodeId(db_node);
       var client_node = new Node(node_id);
 

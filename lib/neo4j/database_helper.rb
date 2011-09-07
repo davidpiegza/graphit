@@ -3,7 +3,11 @@ module Neo4j
   class DatabaseHelper
     
     def initialize(options={})
-      @db = Neography::Rest.new
+      @db = Neography::Rest.new({:server => Rails.application.config.neo4j_host, 
+                                 :port => Rails.application.config.neo4j_port, 
+                                 :username => Rails.application.config.neo4j_username,
+                                 :password => Rails.application.config.neo4j_password })
+
       @subref_node = nil
       generate_graphname if options[:generate_graphname]
     end
