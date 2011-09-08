@@ -78,9 +78,11 @@ Drawing.Neo4jGraph = function(options) {
 
 
   function createGraph() {
+    console.log(neo4j_host + neo4j_root);
     $.getJSON(neo4j_host + neo4j_root, function(db_node) {
       var node_id = getNodeId(db_node);
       var client_node = new Node(node_id);
+      console.log("got node with id" + node_id);
 
       var created_node = graph.addNode(client_node);
       if(created_node) {
