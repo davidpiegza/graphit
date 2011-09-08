@@ -18,8 +18,10 @@ class GraphsController < ApplicationController
   end
   
   def create
-    graph_name = import_xml params
+    #graph_name = import_xml params
+    puts "FILE READ: #{params[:file]}"
     
+    graph_name = nil
     unless graph_name.nil?
       redirect_to graph_path(graph_name)
     else
