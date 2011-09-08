@@ -9,6 +9,7 @@ module Neo4j
                                  :password => Rails.application.config.neo4j_password })
 
       puts "created db: #{Rails.application.config.neo4j_host} #{Rails.application.config.neo4j_port} #{Rails.application.config.neo4j_username} #{Rails.application.config.neo4j_password}"
+      puts "root: #{@db.get_root}"
       @subref_node = nil
       generate_graphname if options[:generate_graphname]
     end
