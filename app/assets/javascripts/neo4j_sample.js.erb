@@ -8,7 +8,7 @@ Drawing.Neo4jGraph = function(options) {
   var graph = new Graph({limit: options.limit});
   var graph_layout;
 
-  var neo4j_host = <%= Rails.application.config.neo4j_rest_url %>;
+  var neo4j_host = "<%= raw Rails.application.config.neo4j_rest_url %>";
   var neo4j_root = "/node/" + (options.node_id || 0);
   var node_queue = [];
   var finished = true;
