@@ -3,7 +3,7 @@ module Neo4j
   class DatabaseHelper
     
     def initialize(options={})
-      url = "http://#{Rails.application.config.neo4j_username}:#{Rails.application.config.neo4j_password}@#{Rails.application.config.neo4j_host}:#{Rails.application.config.neo4j_port}/db/data"
+      url = "http://#{Rails.application.config.neo4j_username}:#{Rails.application.config.neo4j_password}@#{Rails.application.config.neo4j_host}:#{Rails.application.config.neo4j_port}"
       puts "URL #{url}"
       @db = Neography::Rest.new(url)
       # {:server => Rails.application.config.neo4j_host, 
