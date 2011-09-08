@@ -3,7 +3,7 @@ module Neo4j
   class DatabaseHelper
     
     def initialize(options={})
-      @db = Neography::Rest.new(Rails.application.config.neo4j_url)
+      @db = Neography::Rest.new(ENV['NEO4J_URL'] || 'http://localhost:7474')
       @subref_node = nil
       generate_graphname if options[:generate_graphname]
     end

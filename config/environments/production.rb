@@ -49,10 +49,11 @@ Graphit::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
-  config.neo4j_host = ENV['NEO4J_HOST']
-  config.neo4j_port = ENV['NEO4J_PORT']
-  config.neo4j_url = ENV['NEO4J_URL']
-  config.neo4j_rest_url = ENV['NEO4J_REST_URL']
-  config.neo4j_username = ENV['NEO4J_LOGIN']
-  config.neo4j_password = ENV['NEO4J_PASSWORD']
+  # can these config variables be used in controllers and views?
+  # config.neo4j_host = ENV['NEO4J_HOST']
+  # config.neo4j_port = ENV['NEO4J_PORT']
+  # config.neo4j_url = ENV['NEO4J_URL']
+  # config.neo4j_rest_url = ENV['NEO4J_REST_URL']
+  # config.neo4j_username = ENV['NEO4J_LOGIN']
+  # config.neo4j_password = ENV['NEO4J_PASSWORD']
 end
