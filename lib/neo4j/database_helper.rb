@@ -3,16 +3,7 @@ module Neo4j
   class DatabaseHelper
     
     def initialize(options={})
-      url = "http://#{Rails.application.config.neo4j_username}:#{Rails.application.config.neo4j_password}@#{Rails.application.config.neo4j_host}:#{Rails.application.config.neo4j_port}"
-      puts "URL #{url}"
-      @db = Neography::Rest.new(url)
-      # {:server => Rails.application.config.neo4j_host, 
-      #                            :port => Rails.application.config.neo4j_port, 
-      #                            :username => Rails.application.config.neo4j_username,
-      #                            :password => Rails.application.config.neo4j_password })
-
-      puts "created db: #{Rails.application.config.neo4j_host} #{Rails.application.config.neo4j_port} #{Rails.application.config.neo4j_username} #{Rails.application.config.neo4j_password}"
-      puts "root: #{@db.get_root}"
+      @db = Neography::Rest.new(Rails.application.config.neo4j_url)
       @subref_node = nil
       generate_graphname if options[:generate_graphname]
     end
@@ -31,7 +22,6 @@ module Neo4j
 
     def create_subgraph
       if @subref_node.nil?
-        puts "creating subgraph with name #{@graph_name}"
         @subref_node = @db.create_node(:name => @graph_name)
         @db.create_relationship(@graph_name, @db.get_root, @subref_node)
         @db.add_node_to_index("subreferences", "name", @graph_name, @subref_node)
@@ -49,11 +39,10 @@ module Neo4j
 
     def create_node(node)
       if node[:created] && !node[:id].nil? && !node[:edges].empty?
-        puts "creating node #{node.to_yaml}"
+
         # create subgraph if not exist (create only once when the first node is created)
         create_subgraph
         
-        puts "subgraph node: #{@subref_node}"
         # create node if not exist
         cr_node = @db.get_node_index(@graph_name, "id", node[:id].hash.to_s)
         if cr_node.nil?
