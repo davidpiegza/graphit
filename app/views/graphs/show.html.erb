@@ -2,8 +2,8 @@
   <% js = <<EOS
   if(Modernizr.webgl) {
      $( "#info-msg" ).show();
-     //new Drawing.SimpleGraph({layout: "2d", limit: 500});
-      new Drawing.Neo4jGraph({neo4j_host: #{ENV['NEO4J_URL']}, node_id: #{@node_id}, limit: 10000});
+     //new Drawing.SimpleGraph({layout: '2d', limit: 500});
+      new Drawing.Neo4jGraph({neo4j_host: '#{ENV['NEO4J_URL']}', node_id: #{@node_id}, limit: 10000});
     
   } else {
     $( "#nowebgl-dialog" ).dialog({
