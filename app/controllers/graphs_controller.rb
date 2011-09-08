@@ -3,15 +3,13 @@ require "#{Rails.root}/lib/neo4j/database_helper.rb"
 class GraphsController < ApplicationController
 
   def index
-    db = Neography::Rest.new({:server => Rails.application.config.neo4j_host, 
-                              :port => Rails.application.config.neo4j_port, 
-                              :username => Rails.application.config.neo4j_username,
-                              :password => Rails.application.config.neo4j_password })
+    db = Neography::Rest.new(Rails.application.config.neo4j_url)
     root = db.get_root
     @nodes = db.get_node_relationships(db.get_root)
   end
 
   def show
+    puts "REST URL: #{Rails.application.config.neo4j_rest_url}"
     db = Neo4j::DatabaseHelper.new
     node = db.subgraph(params[:id])
     @node_id = node['indexed'].split('/').last
