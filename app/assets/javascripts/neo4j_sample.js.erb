@@ -3,10 +3,13 @@ var Drawing = Drawing || {};
 
 Drawing.Neo4jGraph = function(options) {
   var options = options || {}
+  var layout = options.layout || "2d";
+  var nodes_count = options.nodes || undefined;
+  var edges_count = options.edges || undefined;
   
   var camera, scene, renderer, interaction, stats;
   var graph = new Graph({limit: options.limit});
-  var graph_layout;
+
 
   var neo4j_host = options.neo4j_host || 'http://localhost:7474/db/data';
   var neo4j_root = "/node/" + (options.node_id || 0);
@@ -84,12 +87,12 @@ Drawing.Neo4jGraph = function(options) {
       var client_node = new Node(node_id);
       console.log("got node with id" + node_id);
 
-      var created_node = graph.addNode(client_node);
-      if(created_node) {
-        drawNode(client_node);
-      } else {
-        client_node = graph.getNode(node_id);
-      }
+      // var created_node = graph.addNode(client_node);
+      // if(created_node) {
+      //   drawNode(client_node);
+      // } else {
+      //   client_node = graph.getNode(node_id);
+      // }
   
       $.getJSON(db_node.outgoing_relationships, function(relationships) {
         relationships.forEach(function(relationship) {
@@ -109,15 +112,21 @@ Drawing.Neo4jGraph = function(options) {
               finished = false;
             }
     
-            if(graph.addEdge(client_node, client_node1)) {
-              drawEdge(client_node, client_node1);
-            }
+            // if(graph.addEdge(client_node, client_node1)) {
+            //   drawEdge(client_node, client_node1);
+            // }
           });
         });
       });
     });
   
-    graph.layout = new Layout.ForceDirected(graph, {width: 2000, height: 2000, iterations: 500});
+    graph.layout = new Layout.ForceDirected(graph, {width: 2000, height: 2000, iterations: 10000});
+
+    if(layout === "3d") {
+      graph.layout = new Layout.ForceDirected3D(graph, {width: 2000, height: 2000, iterations: 1000});
+    } else {
+      graph.layout = new Layout.ForceDirected(graph, {width: 2000, height: 2000, iterations: 1000});
+    }
   }
 
 
@@ -193,8 +202,11 @@ Drawing.Neo4jGraph = function(options) {
 
 
   function drawNode(node) {
-
-    var geometry = new THREE.CubeGeometry( 100, 100, 0 );
+    if(layout === "3d") {
+      geometry = new THREE.CubeGeometry( 50, 50, 50 );
+    } else {
+      geometry = new THREE.CubeGeometry( 50, 50, 0 );
+    }
     var draw_object = new THREE.Mesh( geometry, [ new THREE.MeshBasicMaterial( {  color: Math.random() * 0xffffff, opacity: 0.5 } ), new THREE.MeshBasicMaterial( { color: 0xffffff, opacity: 0.5, wireframe: true } ) ] );
 
     // label
@@ -212,16 +224,13 @@ Drawing.Neo4jGraph = function(options) {
 
 
     var area = 5000;
-    if(node.id == 0) {
-      draw_object.position.x = 0;
-      draw_object.position.y = 0;
-      // draw_object.position.z = 0;
-    } else {
-      draw_object.position.x = Math.floor(Math.random() * (area + area + 1) - area);
-      draw_object.position.y = Math.floor(Math.random() * (area + area + 1) - area);
-      // draw_object.position.z = Math.floor(Math.random() * (area + area + 1) - area);
-    }
 
+    draw_object.position.x = Math.floor(Math.random() * (area + area + 1) - area);
+    draw_object.position.y = Math.floor(Math.random() * (area + area + 1) - area);
+    if(layout === "3d") {
+      draw_object.position.z = Math.floor(Math.random() * (area + area + 1) - area);
+    }
+    
     // var mesh = new THREE.Mesh( new THREE.PlaneGeometry( 100, 100 ), xm );
     // mesh.position.x = draw_object.position.x;
     // mesh.position.y = draw_object.position.y;
@@ -231,7 +240,6 @@ Drawing.Neo4jGraph = function(options) {
     // mesh.type = "label";
     // scene.addObject(mesh);
 
-
     draw_object.id = node.id;
     node.data.draw_object = draw_object;
     node.position = draw_object.position;
@@ -240,14 +248,12 @@ Drawing.Neo4jGraph = function(options) {
   }
 
 
-
-
   function drawEdge(source, target, type) {
-    var color = 0xff0000;
+    var color = 0x333333;
     if(type == "dislikes") {
       color = 0x00ff00;
     }
-    material = new THREE.LineBasicMaterial( { color: color, opacity: 1, linewidth: 1 } );
+    material = new THREE.LineBasicMaterial( { color: color, opacity: 0.5, linewidth: 1 } );
     tmp_geo = new THREE.Geometry();
 
     tmp_geo.vertices.push(new THREE.Vertex(source.data.draw_object.position));
@@ -270,7 +276,6 @@ Drawing.Neo4jGraph = function(options) {
 
   function render() {
     getNodes();
-
     if(graph.layout.generate()) {
       graph.layout.init();
       info.style.border = '10px solid red';
