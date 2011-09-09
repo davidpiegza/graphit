@@ -18,10 +18,11 @@ class GraphsController < ApplicationController
   end
   
   def create
-    #graph_name = import_xml params
-    puts "FILE READ: #{params[:file]}"
+    # beginning_time = Time.now
+    # graph_name = import_xml params
+    # end_time = Time.now
+    # puts "Time elapsed #{(end_time - beginning_time)} seconds"
     
-    graph_name = nil
     unless graph_name.nil?
       redirect_to graph_path(graph_name)
     else
