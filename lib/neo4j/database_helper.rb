@@ -4,18 +4,21 @@ module Neo4j
     
     def initialize(options={})
       @db = Neography::Rest.new(ENV['NEO4J_URL'] || 'http://localhost:7474')
-      @subref_node = nil
-      generate_graphname if options[:generate_graphname]
+      @subref_node = nil 
+      
+      @graph_name = options[:graphname] || Random.city.downcase.gsub(/\s/, '-')
+      generate_graphname
     end
     
     def generate_graphname
-      begin
-        @graph_name = Random.city.downcase.gsub(/\s/, '-')
+      subref_node = @db.get_node_index("subreferences", "name", @graph_name)
+      while not subref_node.nil?
+        @graph_name += "#{1 + rand(10)}"
         subref_node = @db.get_node_index("subreferences", "name", @graph_name)
-      end while not subref_node.nil?
+      end
       @graph_name
     end
-    
+
     def graphname
       @graph_name
     end
@@ -52,8 +55,10 @@ module Neo4j
         else
           cr_node = cr_node.first
         end
-        @db.set_node_properties(cr_node, { "title" => node[:data][:title] }) unless node[:data][:title].blank?
-        @db.set_node_properties(cr_node, { "description" => node[:data][:description] }) unless node[:data][:description].blank?
+        
+        node[:data].each do |key, value|
+          @db.set_node_properties(cr_node, { key => value }) unless value.blank?
+        end
         
         last_hash = node[:id].hash
 
