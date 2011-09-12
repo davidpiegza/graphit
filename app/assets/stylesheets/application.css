@@ -3,7 +3,6 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
- *= require formalize
  *= require tipTip
  *= require_tree . 
 */
@@ -17,14 +16,17 @@ body {
 	background-color: #fff;
 	overflow: hidden;	
 	font-family:  "Myriad pro", "Helvetica";
+	position: relative;
+}
+
+canvas {
 }
 
 header {
 	position: absolute;
-	top: 0px;
-	background-color: #eee;
+	background-color: #414141;
 	border-bottom: 1px solid #ddd;
-	color: black;
+	color: #fffff0;
 	height: 50px;
 	width: 100%;
 	z-index: 1;
@@ -32,8 +34,7 @@ header {
 
 header a {
 	font-family:  "Trebuchet MS";
-	color: black;
-	text-shadow: 2px 1px 0 rgba(255, 255, 255, 0.8);
+/*	text-shadow: 2px 1px 0 rgba(255, 255, 255, 0.8);*/
 	text-decoration: none;
 }
 
@@ -46,18 +47,42 @@ header a {
 #logo a {
 	font-size: 30px;
 	font-weight: bold;
+	color: #fffff0;
 }
+
+#logo span {
+	margin-left: 20px;
+	font-size: 16px;
+	text-shadow: none;
+}
+
+#logo a:hover, nav a:hover {
+	text-shadow: 1px 1px 0 rgba(200, 0, 0, 0.8);
+}
+
+nav {
+	float: left;
+	padding-top: 18px;
+}
+
+nav a {
+	color: #fffff0;
+	margin-left: 20px;
+	font-size: 16px;
+	text-shadow: none;
+}
+
 
 .logo {
 	font-family:  "Trebuchet MS";
-	text-shadow: 2px 1px 0 rgba(200, 200, 200, 0.8);
+	text-shadow: 1px 1px 0 rgba(200, 200, 200, 0.8);
 	font-weight: bold;
 }
 
 #buttons {
 	float: right;
 	padding: 15px;
-	width: 500px;
+	width: 300px;
 }
 
 #buttons input {
@@ -71,6 +96,11 @@ header a {
 	-webkit-border-radius: 4px; 
 	-moz-border-radius: 4px;
 	border-radius: 4px;
+}
+
+a {
+	text-decoration: none;
+	color: #cc2a2a;
 }
 
 
@@ -93,7 +123,7 @@ header a {
 }
 
 .ui-dialog-titlebar {
-	background-color: rgb(160, 180, 200);
+	background-color: rgb(143, 141, 133);
 	padding: 4px;
 	padding-top: 10px;
 	padding-left: 10px;
@@ -141,7 +171,7 @@ header a {
 }
 
 .welcome-buttons input {
-	font-size: 20px;
+	font-size: 12px;
 }
 
 #info-msg {
@@ -160,6 +190,42 @@ header a {
 	font-size: 14px;
 }
 
-form input {
+.ui-dialog form input {
+/*	width: 200px;*/
+}
+
+
+
+/* Graphs show */ 
+
+
+#options-dialog-button {
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	border: 1px solid #ccc;
+	padding: 3px 10px;
+	background-color: #fff;
+	z-index: 11;
+}
+
+#options-dialog {
+	position: absolute;
+	top: 50px;
+	right: -252px;
 	width: 200px;
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	padding: 50px 10px 40px 40px;
+	z-index: 10;
+}
+
+#graph-info {
+	position: absolute;
+  top: 50px;
+  left: 40%;
+  margin: 10px;
+  background-color: #ffffe0;
+  color: #333;
+  padding: 5px 10px;
 }
