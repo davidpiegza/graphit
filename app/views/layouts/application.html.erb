@@ -10,14 +10,24 @@
 <body >
 
   <header>
+    <div style="width: 80%; margin: 0 auto;">
     <div id="logo">
       <a href="/" class="logo">graphit</a>
     </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/graphs">Graphs</a>
+      <a href="/graphs/new">Import Graphdata</a>
+    </nav>
     <div id="buttons">
-      <form>
-        <input name="q" type="search" placeholder="Search in graph" class="search">
-      </form>
-      <input name="q" type="button" value="Import your graph data">
+      <% unless @node_id.nil? %>
+        <form>
+          <input id="graph-search" name="q" type="search" placeholder="Search in graph" class="search">
+        </form>
+      <% end %>
+      <!-- <input name="q" type="button" value="Import your graph data"> -->
+      <!-- <input name="q" type="button" value="Show Options"> -->
+    </div>
     </div>
   </header>
   
