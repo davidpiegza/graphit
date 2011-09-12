@@ -8,14 +8,6 @@
       closeOnEscape: false,
       show: {effect: "fade", duration: 2000 },
     });
-    
-    $( "#load-sample-graph" ).click(function() {
-     $( "#welcome-dialog" ).dialog("close");
-     $( "#info-msg" ).show();
-     new Drawing.SimpleGraph({layout: "3d", limit: 500, nodes: 50});
-     // new Drawing.Neo4jGraph({limit: 10000});
-    });
-    
   } else {
     $( "#nowebgl-dialog" ).dialog({
       modal: false,
@@ -40,7 +32,9 @@ EOS
         <input type="submit" value="Import your data" />
 	    </form>
 	     &nbsp;or&nbsp;
-      <input type="button" value="Load a sample graph" id="load-sample-graph" />
+       <form action="/sample-graph" method="get">
+         <input type="submit" value="Load a sample graph" id="load-sample-graph" />
+       </form>
   	</p>
 	</div>
 </div>
@@ -53,10 +47,4 @@ EOS
 	  <li>Google Chrome 10</li>
 	  <li>Opera 10.11</li>
 	</ul>
-</div>
-
-<div id="info-msg">
-  Rotate: Left Mouse Button and Move<br />
-  Zoom: Left Mouse Button + Key S and Move<br /> 
-  Drag: Left Mouse Button + Key D and Move
 </div>
