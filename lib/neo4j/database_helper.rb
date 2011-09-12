@@ -8,6 +8,8 @@ module Neo4j
       
       @graph_name = options[:graphname] || Random.city.downcase.gsub(/\s/, '-')
       generate_graphname
+
+      @db.create_node_index(@graph_name, "fulltext") 
     end
     
     def generate_graphname
@@ -51,17 +53,16 @@ module Neo4j
         if cr_node.nil?
           cr_node = @db.create_node("id" => node[:id].hash.to_s, "id_clear" => node[:id], "type" => node[:type])          
           @db.add_node_to_index(@graph_name, "id", node[:id].hash.to_s, cr_node)
-          @db.create_relationship('root-ref', @subref_node, cr_node)
-
           @db.add_node_to_index(@graph_name, "property", node[:id], cr_node)
-          node[:data].each do |key, value|
-            @db.set_node_properties(cr_node, { key => value }) unless value.blank?
-            @db.add_node_to_index(@graph_name, "property", value, cr_node)
-          end
+          @db.create_relationship('root-ref', @subref_node, cr_node)
         else
           cr_node = cr_node.first
         end
-        
+
+        node[:data].each do |key, value|
+          @db.set_node_properties(cr_node, { key => value }) unless value.blank?
+          @db.add_node_to_index(@graph_name, "property", value, cr_node)
+        end
         
         last_hash = node[:id].hash
 
