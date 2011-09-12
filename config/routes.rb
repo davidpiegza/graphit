@@ -47,6 +47,7 @@ Graphit::Application.routes.draw do
   #   end
   
   resources :graphs
+  get '/sample-graph', :to => 'pages#sample_graph'
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
