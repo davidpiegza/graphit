@@ -9,7 +9,9 @@ module Neo4j
       @graph_name = options[:graphname] || Random.city.downcase.gsub(/\s/, '-')
       generate_graphname
 
-      @db.create_node_index(@graph_name, "fulltext") 
+      @db.create_node_index(@graph_name, "fulltext")
+      @node_count = 0
+      @edge_count = 0
     end
     
     def generate_graphname
@@ -51,7 +53,9 @@ module Neo4j
         # create node if not exist
         cr_node = @db.get_node_index(@graph_name, "id", node[:id].hash.to_s)
         if cr_node.nil?
-          cr_node = @db.create_node("id" => node[:id].hash.to_s, "id_clear" => node[:id], "type" => node[:type])          
+          cr_node = @db.create_node("id" => node[:id].hash.to_s, "id_clear" => node[:id], "type" => node[:type])
+          @node_count += 1
+          @db.set_node_properties(@subref_node, { "node_count" => @node_count })
           @db.add_node_to_index(@graph_name, "id", node[:id].hash.to_s, cr_node)
           @db.add_node_to_index(@graph_name, "property", node[:id], cr_node)
           @db.create_relationship('root-ref', @subref_node, cr_node)
@@ -73,6 +77,8 @@ module Neo4j
             @db.create_relationship("friends", cr_node, rel_node)
           else
             rel_node = @db.create_node("id" => cite[:id].hash.to_s, "id_clear" => cite[:id])
+            @node_count += 1
+            @db.set_node_properties(@subref_node, { "node_count" => @node_count })
             @db.add_node_to_index(@graph_name, "id", cite[:id].hash.to_s, rel_node)
             @db.add_node_to_index(@graph_name, "property", cite[:id], rel_node)
             @db.create_relationship('root-ref', @subref_node, rel_node)
