@@ -2,9 +2,27 @@
   <% js = <<EOS
   if(Modernizr.webgl) {
      $( "#info-msg" ).show();
-     //new Drawing.SimpleGraph({layout: '2d', limit: 500});
-      new Drawing.Neo4jGraph({neo4j_host: '#{ENV['NEO4J_REST_URL']}', layout: '3d', node_id: #{@node_id}});
+     //new Drawing.SimpleGraph({layout: '3d', limit: 500});
+    new Drawing.Neo4jGraph({neo4j_host: '#{ENV['NEO4J_REST_URL']}', layout: '3d', node_id: #{@node_id}, selection: true, numNodes: 50, showInfo: true, showStats: true});
     
+
+    $( "#graph-search" ).autocomplete({
+      source: function(req, add) {
+        //pass request to server 
+        $.getJSON("http://localhost:7474/db/data/index/node/nodes32/property/" + req.term, function(data) {
+          //process response  
+          $.each(data, function(i, val){  
+            alert(val.self);
+          });  
+        });
+      },
+      minLength: 2,
+      select: function( event, ui ) {
+        log( ui.item ?
+        "Selected: " + ui.item.value + " aka " + ui.item.id :
+        "Nothing selected, input was " + this.value );
+      }
+    });
   } else {
     $( "#nowebgl-dialog" ).dialog({
       modal: false,
@@ -19,7 +37,6 @@ EOS
   <%= raw js %>
 <% end %>
 
-
 <div class="dialog" id="nowebgl-dialog" title="Welcome to <span class='logo'>graphit</span>">
 	<p>Sorry, your browser does not support WebGL!</p>
 	<p>Get one of the following browser and try again:</p>
@@ -31,8 +48,32 @@ EOS
 	</ul>
 </div>
 
+
+<div id="options-dialog-button">
+  <a href="">Options</a>
+</div>
+<div id="options-dialog">
+  <form>
+    <p>
+      <label>Drawing</label><br>
+      <select>
+        <option>2D-Force-Directed</option>
+        <option>3D-Force-Directed</option>
+        <option>Sphere Graph</option>
+      </select>
+    </p>
+    <p>
+      <input type="checkbox" id="show_labels"> 
+      <label for="show_labels">Show labels</label>
+    </p>
+    <p>
+      <input type="button" value="Stop calculating layout" onclick="drawing.stop_calculating()"> 
+    </p>
+  </form>
+</div>
+
 <div id="info-msg">
   Rotate: Left Mouse Button and Move<br />
-  Zoom: Left Mouse Button + Key S and Move<br /> 
-  Drag: Left Mouse Button + Key D and Move
+  Zoom: Press Key S + Left Mouse Button and Move<br /> 
+  Drag: Press Key D + Left Mouse Button and Move
 </div>
