@@ -52,13 +52,16 @@ module Neo4j
           cr_node = @db.create_node("id" => node[:id].hash.to_s, "id_clear" => node[:id], "type" => node[:type])          
           @db.add_node_to_index(@graph_name, "id", node[:id].hash.to_s, cr_node)
           @db.create_relationship('root-ref', @subref_node, cr_node)
+
+          @db.add_node_to_index(@graph_name, "property", node[:id], cr_node)
+          node[:data].each do |key, value|
+            @db.set_node_properties(cr_node, { key => value }) unless value.blank?
+            @db.add_node_to_index(@graph_name, "property", value, cr_node)
+          end
         else
           cr_node = cr_node.first
         end
         
-        node[:data].each do |key, value|
-          @db.set_node_properties(cr_node, { key => value }) unless value.blank?
-        end
         
         last_hash = node[:id].hash
 
@@ -70,6 +73,7 @@ module Neo4j
           else
             rel_node = @db.create_node("id" => cite[:id].hash.to_s, "id_clear" => cite[:id])
             @db.add_node_to_index(@graph_name, "id", cite[:id].hash.to_s, rel_node)
+            @db.add_node_to_index(@graph_name, "property", cite[:id], rel_node)
             @db.create_relationship('root-ref', @subref_node, rel_node)
             @db.create_relationship("friends", cr_node, rel_node)
           end
