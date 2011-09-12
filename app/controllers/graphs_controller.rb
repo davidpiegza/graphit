@@ -3,9 +3,8 @@ require "#{Rails.root}/lib/neo4j/database_helper.rb"
 class GraphsController < ApplicationController
 
   def index
-    db = Neography::Rest.new(ENV['NEO4J_URL'] || 'http://localhost:7474')
-    root = db.get_root
-    @nodes = db.get_node_relationships(db.get_root)
+    @db = Neography::Rest.new(ENV['NEO4J_URL'] || 'http://localhost:7474')
+    @nodes = @db.get_node_relationships(@db.get_root)
   end
 
   def show

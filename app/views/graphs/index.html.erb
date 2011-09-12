@@ -16,8 +16,12 @@ EOS
 	<p>On this site you can visualize graph data in a 3D layout.</p>
 	<ul>
     <% @nodes.each do |node| %>
+      <% subgraph = @db.get_node(node['end']) %>
       <li>
-        <%= node['type'].to_s %>
+        <a href="<%= graph_path(node['type']) %>"><%= node['type'].to_s %></a>
+        <% unless subgraph['data']['node_count'].blank? %>
+          (<%= "#{subgraph['data']['node_count']} Nodes" %>)
+        <% end %>
       </li>
     <% end %>
   </ul>
