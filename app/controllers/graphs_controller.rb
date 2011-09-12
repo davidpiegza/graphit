@@ -19,7 +19,7 @@ class GraphsController < ApplicationController
   
   def create
     # beginning_time = Time.now
-    # graph_name = import_xml params
+    graph_name = import_xml params
     # end_time = Time.now
     # puts "Time elapsed #{(end_time - beginning_time)} seconds"
     
@@ -42,9 +42,12 @@ class GraphsController < ApplicationController
     id_element = params[:'id-element'].blank? ?  'self.id' : params[:'id-element']
     ref_element = params[:'ref-element'].blank? ? 'ref' : params[:'ref-element']
 
-    db = Neo4j::DatabaseHelper.new(:generate_graphname => true)
 
-    puts "reading file..."
+    filename = File.basename(file.original_filename, ".xml")
+
+    db = Neo4j::DatabaseHelper.new(:graphname => filename)
+
+    puts "reading file... #{filename}"
 
     reader = Nokogiri::XML::Reader(params[:file]) { |config|
       config.dtdload.dtdattr
@@ -82,7 +85,7 @@ class GraphsController < ApplicationController
           if reader.name == ref_element
             reader.read
             if reader.node_type == Nokogiri::XML::Node::TEXT_NODE
-              if !reader.value.empty? && reader.value != "..."          
+              if reader.value? && reader.value != "..."
                 node[:edges].push({:id => reader.value})
                 cite_count += 1
               end
@@ -90,13 +93,15 @@ class GraphsController < ApplicationController
           elsif node[:id].nil? && reader.name == id_element
             reader.read
             node[:id] = reader.value if reader.value?
-          elsif reader.name == params[:'title-element']
+          else
+            property = reader.name
             reader.read
-            node[:data][:title] = reader.value if reader.value?
-          elsif reader.name == params[:'description-element']
-            reader.read
-            node[:data][:description] = reader.value if reader.value?
-          end          
+            if reader.node_type == Nokogiri::XML::Node::TEXT_NODE
+              if reader.value? && reader.value != "..."
+                node[:data][property.to_sym] = reader.value
+              end
+            end
+          end
         end
 
         steps += 1
